@@ -1,27 +1,30 @@
 use std::ops::{Add, Sub};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Vector {
      pub magnitude: f64,
      pub bearing: f64,
 }
 
 impl Vector {
-     fn x(&self) -> f64 {
+     pub fn x(&self) -> f64 {
           self.magnitude * self.bearing.cos()
      }
 
-     fn y(&self) -> f64 {
+     pub fn y(&self) -> f64 {
           self.magnitude * self.bearing.sin()
      }
 
-     fn rotate(&self, angle: f64) -> Vector {
+     pub fn rotate(&mut self, angle: f64) -> Vector {
           let x2 = angle.cos() * self.x() - angle.sin() * self.y();
           let y2 = angle.sin() * self.x() + angle.cos() * self.y();
 
+          self.magnitude = (x2.powf(2.0) + y2.powf(2.0)).sqrt();
+          self.bearing = (y2 / x2).tan();
+
           Vector {
-               magnitude: (x2.powf(2.0) + y2.powf(2.0)).sqrt(),
-               bearing: (y2 / x2).tan(),
+               magnitude: self.magnitude,
+               bearing: self.bearing,
           }
      }
 }
