@@ -1,6 +1,6 @@
 use std::ops::{Add, Sub};
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Position {
      pub x: f64,
      pub y: f64,
