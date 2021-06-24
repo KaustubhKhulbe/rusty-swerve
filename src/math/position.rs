@@ -7,6 +7,16 @@ pub struct Position {
      pub bearing: f64,
 }
 
+impl Position {
+     pub fn new(x: f64, y: f64, bearing: f64) -> Position {
+          Position {
+               x: (1000.0 * x).round() / 1000.0,
+               y: (1000.0 * y).round() / 1000.0,
+               bearing,
+          }
+     }
+}
+
 impl Add for Position {
      type Output = Self;
 

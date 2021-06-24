@@ -20,8 +20,10 @@ impl Vector {
           let y2 = angle.sin() * self.x() + angle.cos() * self.y();
 
           self.magnitude = (x2.powf(2.0) + y2.powf(2.0)).sqrt();
-          self.bearing = (y2 / x2).tan();
+          self.bearing = y2.atan2(x2);
 
+          self.magnitude = (1000.0 * self.magnitude).round() / 1000.0;
+          self.bearing = (1000.0 * self.bearing).round() / 1000.0;
           Vector {
                magnitude: self.magnitude,
                bearing: self.bearing,
@@ -34,10 +36,11 @@ impl Add for Vector {
 
      /* Need to double check logic here, but seems okay */
      fn add(self, other: Self) -> Self {
+          let new_x = self.x() + other.x();
+          let new_y = self.y() + other.y();
           Self {
-               magnitude: ((self.x() + other.x()).powf(2.0) + (self.y() + other.y()).powf(2.0))
-                    .sqrt(),
-               bearing: self.bearing + (other.bearing - self.bearing),
+               magnitude: (new_x.powf(2.0) + new_y.powf(2.0)).sqrt(),
+               bearing: (1000.0 * new_y.atan2(new_x)).round() / 1000.0,
           }
      }
 }
@@ -47,10 +50,11 @@ impl Sub for Vector {
 
      /* Need to double check logic here, but seems okay */
      fn sub(self, other: Self) -> Self {
+          let new_x = self.x() - other.x();
+          let new_y = self.y() - other.y();
           Self {
-               magnitude: ((self.x() - other.x()).powf(2.0) + (self.y() - other.y()).powf(2.0))
-                    .sqrt(),
-               bearing: self.bearing - (other.bearing - self.bearing),
+               magnitude: (new_x.powf(2.0) + new_y.powf(2.0)).sqrt(),
+               bearing: (1000.0 * new_y.atan2(new_x)).round() / 1000.0,
           }
      }
 }
