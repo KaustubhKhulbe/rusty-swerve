@@ -7,8 +7,16 @@ pub struct Point {
 }
 
 impl Point {
+     pub fn new(x: f64, y: f64) -> Point {
+          Point { x, y }
+     }
+
      pub(crate) fn bearing(&self) -> f64 {
           (self.y).atan2(self.x)
+     }
+
+     pub fn magnitude(&self) -> f64 {
+          (self.x.powf(2.0) + self.y.powf(2.0)).sqrt()
      }
 
      pub(crate) fn rotate(&mut self, angle: f64) -> Self {

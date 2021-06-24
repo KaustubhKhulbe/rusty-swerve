@@ -7,6 +7,7 @@ use crate::math::position::Position;
 use crate::math::vector::Vector;
 use std::f64::consts::PI;
 
+use crate::algos::control::SwerveControl;
 use crate::algos::odometry::SwerveOdometry;
 
 fn main() {
@@ -14,6 +15,7 @@ fn main() {
     test_position();
     test_vector();
     test_swerve_odometry();
+    test_swerve_control();
 }
 
 fn test_point() {
@@ -139,4 +141,27 @@ fn test_swerve_odometry() {
     );
 
     odom.reset_position();
+}
+
+fn test_swerve_control() {
+    let mut control = SwerveControl {
+        radius_vecs: vec![
+            Point::new(0.0, 0.0),
+            Point::new(0.0, 0.0),
+            Point::new(0.0, 0.0),
+            Point::new(0.0, 0.0),
+        ],
+        pos: Position {
+            x: 0.0,
+            y: 0.0,
+            bearing: 0.0,
+        },
+        radius_width: 2.0,
+        radius_length: 2.0,
+    };
+
+    let module_angles = control.get_swerve_module_angles(Point::new(0.0, 3.0), 0.0);
+    println!("{:#?}", module_angles);
+
+    // Need to put JUnit tests
 }
