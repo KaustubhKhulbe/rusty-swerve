@@ -3,12 +3,16 @@ use std::ops::{Add, Sub};
 use uom::si::f64::*;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
-pub struct Vector {
-    pub magnitude: Length,
+pub struct Vector<T> {
+    pub magnitude: T,
     pub bearing: Angle,
 }
 
-impl Vector {
+impl Vector<Length> {
+    pub fn new(magnitude: Length, bearing: Angle) -> Vector<Length> {
+        return Vector { magnitude, bearing };
+    }
+
     pub fn x(&self) -> Length {
         return self.magnitude * self.bearing.value.cos();
     }
@@ -17,7 +21,7 @@ impl Vector {
         return self.magnitude * self.bearing.value.sin();
     }
 
-    pub fn rotate(&mut self, angle: f64) -> Vector {
+    pub fn rotate(&mut self, angle: f64) -> Vector<Length> {
         let x2 = angle.cos() * self.x() - angle.sin() * self.y();
         let y2 = angle.sin() * self.x() + angle.cos() * self.y();
 
