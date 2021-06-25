@@ -1,19 +1,16 @@
 use std::ops::{Add, Sub};
+use uom::si::f64::*;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Position {
-    pub x: f64,
-    pub y: f64,
-    pub bearing: f64,
+    pub x: Length,
+    pub y: Length,
+    pub bearing: Angle,
 }
 
 impl Position {
-    pub fn new(x: f64, y: f64, bearing: f64) -> Position {
-        Position {
-            x: (1000.0 * x).round() / 1000.0,
-            y: (1000.0 * y).round() / 1000.0,
-            bearing,
-        }
+    pub fn new(x: Length, y: Length, bearing: Angle) -> Position {
+        Position { x, y, bearing }
     }
 }
 

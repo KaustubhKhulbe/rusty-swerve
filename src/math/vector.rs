@@ -1,60 +1,35 @@
 use std::ops::{Add, Sub};
 
+use uom::si::f64::*;
+use uom::si::length::foot;
+
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Vector {
-    pub magnitude: f64,
-    pub bearing: f64,
+    pub magnitude: Length,
+    pub bearing: Angle,
 }
 
 impl Vector {
-    pub fn x(&self) -> f64 {
-        self.magnitude * self.bearing.cos()
+    pub fn x(&self) -> Length {
+        return self.magnitude * self.bearing.value.cos();
     }
 
-    pub fn y(&self) -> f64 {
-        self.magnitude * self.bearing.sin()
+    pub fn y(&self) -> Length {
+        return self.magnitude * self.bearing.value.sin();
     }
 
     pub fn rotate(&mut self, angle: f64) -> Vector {
         let x2 = angle.cos() * self.x() - angle.sin() * self.y();
         let y2 = angle.sin() * self.x() + angle.cos() * self.y();
 
-        self.magnitude = (x2.powf(2.0) + y2.powf(2.0)).sqrt();
+        self.magnitude = Length::new::<foot>((x2.value.powf(2.0) + y2.value.powf(2.0)).sqrt());
         self.bearing = y2.atan2(x2);
 
-        self.magnitude = (1000.0 * self.magnitude).round() / 1000.0;
-        self.bearing = (1000.0 * self.bearing).round() / 1000.0;
+        self.magnitude = self.magnitude;
+        self.bearing = self.bearing;
         Vector {
             magnitude: self.magnitude,
             bearing: self.bearing,
-        }
-    }
-}
-
-impl Add for Vector {
-    type Output = Self;
-
-    /* Need to double check logic here, but seems okay */
-    fn add(self, other: Self) -> Self {
-        let new_x = self.x() + other.x();
-        let new_y = self.y() + other.y();
-        Self {
-            magnitude: (new_x.powf(2.0) + new_y.powf(2.0)).sqrt(),
-            bearing: (1000.0 * new_y.atan2(new_x)).round() / 1000.0,
-        }
-    }
-}
-
-impl Sub for Vector {
-    type Output = Self;
-
-    /* Need to double check logic here, but seems okay */
-    fn sub(self, other: Self) -> Self {
-        let new_x = self.x() - other.x();
-        let new_y = self.y() - other.y();
-        Self {
-            magnitude: (new_x.powf(2.0) + new_y.powf(2.0)).sqrt(),
-            bearing: (1000.0 * new_y.atan2(new_x)).round() / 1000.0,
         }
     }
 }

@@ -1,22 +1,26 @@
+use uom::si::angle::radian;
+use uom::si::f64::*;
+use uom::si::length::foot;
+
 use std::ops::{Add, Sub};
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Point {
-    pub(crate) x: f64,
-    pub(crate) y: f64,
+    pub x: Length,
+    pub y: Length,
 }
 
 impl Point {
-    pub fn new(x: f64, y: f64) -> Point {
+    pub fn new(x: Length, y: Length) -> Point {
         Point { x, y }
     }
 
-    pub(crate) fn bearing(&self) -> f64 {
-        (self.y).atan2(self.x)
+    pub fn bearing(&self) -> Angle {
+        return Angle::new::<radian>(self.y.value.atan2(self.x.value));
     }
 
-    pub fn magnitude(&self) -> f64 {
-        (self.x.powf(2.0) + self.y.powf(2.0)).sqrt()
+    pub fn magnitude(&self) -> Length {
+        return Length::new::<foot>((self.y.value.powf(2.0) + self.x.value.powf(2.0)).sqrt());
     }
 
     pub(crate) fn rotate(&mut self, angle: f64) -> Self {
@@ -24,9 +28,8 @@ impl Point {
         let y_temp = angle.sin() * self.x + angle.cos() * self.y;
 
         //note: update done after so that it is using previous values
-        //rounds number to the 3rd digit
-        self.x = (1000.0 * x_temp).round() / 1000.0;
-        self.y = (1000.0 * y_temp).round() / 1000.0;
+        self.x = x_temp;
+        self.y = y_temp;
         Self {
             x: self.x,
             y: self.y,
