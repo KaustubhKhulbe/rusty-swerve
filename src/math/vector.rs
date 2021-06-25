@@ -1,7 +1,6 @@
 use std::ops::{Add, Sub};
 
 use uom::si::f64::*;
-use uom::si::length::foot;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
 pub struct Vector {
@@ -22,7 +21,8 @@ impl Vector {
         let x2 = angle.cos() * self.x() - angle.sin() * self.y();
         let y2 = angle.sin() * self.x() + angle.cos() * self.y();
 
-        self.magnitude = Length::new::<foot>((x2.value.powf(2.0) + y2.value.powf(2.0)).sqrt());
+        self.magnitude =
+            (x2.powi(uom::typenum::P2::new()) + y2.powi(uom::typenum::P2::new())).sqrt();
         self.bearing = y2.atan2(x2);
 
         self.magnitude = self.magnitude;

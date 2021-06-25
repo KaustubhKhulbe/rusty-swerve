@@ -1,6 +1,5 @@
 use uom::si::angle::radian;
 use uom::si::f64::*;
-use uom::si::length::foot;
 
 use std::ops::{Add, Sub};
 
@@ -20,7 +19,8 @@ impl Point {
     }
 
     pub fn magnitude(&self) -> Length {
-        return Length::new::<foot>((self.y.value.powf(2.0) + self.x.value.powf(2.0)).sqrt());
+        return (self.y.powi(::uom::typenum::P2::new()) + self.x.powi(::uom::typenum::P2::new()))
+            .sqrt();
     }
 
     pub(crate) fn rotate(&mut self, angle: f64) -> Self {
