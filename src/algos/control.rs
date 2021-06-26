@@ -2,10 +2,7 @@ use crate::math::point::Point;
 use crate::math::position::Position;
 use crate::swerve::swerve_drivetrain_output::SwerveDrivetrainOutput;
 use crate::swerve::swerve_module_output::SwerveModuleOutput;
-use uom::si::angular_velocity::degree_per_second;
 use uom::si::f64::*;
-use uom::si::length::foot;
-use uom::si::time::second;
 
 pub struct Control {
     pub radius_vecs: Vec<Point<Length>>,

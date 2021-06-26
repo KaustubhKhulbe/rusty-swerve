@@ -1,4 +1,3 @@
-use crate::math::point::Point;
 use uom::si::f64::*;
 
 #[derive(Debug, PartialEq, Copy, Clone)]
