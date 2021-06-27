@@ -32,7 +32,7 @@ fn main() {
 }
 
 fn test_swerve_control() {
-    run_control_simulation(0.0, 0.0, -2.0);
+    run_control_simulation(0.0, 0.0, 2.0);
     // Need to put JUnit tests
 }
 
@@ -75,11 +75,11 @@ fn run_control_simulation(xv: f64, yv: f64, b: f64) {
 }
 
 fn test_odometry_control() {
-    simulate_odom_test(5.0, 0.0, 5.0, 0.0, 5.0, 0.0, 5.0, 0.0);
+    simulate_odom_test(&[5.0, 0.0, 5.0, 0.0, 5.0, 0.0, 5.0, 0.0]);
     println!("######## new test ####### ");
-    simulate_odom_test(5.0, PI / 4.0, 5.0, PI / 4.0, 5.0, PI / 4.0, 5.0, PI / 4.0);
+    simulate_odom_test(&[5.0, PI / 4.0, 5.0, PI / 4.0, 5.0, PI / 4.0, 5.0, PI / 4.0]);
     println!("######## new test ####### ");
-    simulate_odom_test(
+    simulate_odom_test(&[
         5.0,
         3.0 * PI / 4.0,
         5.0,
@@ -88,19 +88,10 @@ fn test_odometry_control() {
         -PI / 4.0,
         5.0,
         PI / 4.0,
-    );
+    ]);
 }
 
-fn simulate_odom_test(
-    wd1: f64,
-    wb1: f64,
-    wd2: f64,
-    wb2: f64,
-    wd3: f64,
-    wb3: f64,
-    wd4: f64,
-    wb4: f64,
-) {
+fn simulate_odom_test(arr: &[f64; 8]) {
     let mut odom = Odometry {
         radius_width: Length::new::<foot>(2.0),
         radius_length: Length::new::<foot>(2.0),
@@ -111,10 +102,10 @@ fn simulate_odom_test(
         },
     };
 
-    let tr = ModuleDisplacement::new(Length::new::<foot>(wd1), Angle::new::<radian>(wb1));
-    let br = ModuleDisplacement::new(Length::new::<foot>(wd2), Angle::new::<radian>(wb2));
-    let bl = ModuleDisplacement::new(Length::new::<foot>(wd3), Angle::new::<radian>(wb3));
-    let tl = ModuleDisplacement::new(Length::new::<foot>(wd4), Angle::new::<radian>(wb4));
+    let tr = ModuleDisplacement::new(Length::new::<foot>(arr[0]), Angle::new::<radian>(arr[1]));
+    let br = ModuleDisplacement::new(Length::new::<foot>(arr[2]), Angle::new::<radian>(arr[3]));
+    let bl = ModuleDisplacement::new(Length::new::<foot>(arr[4]), Angle::new::<radian>(arr[5]));
+    let tl = ModuleDisplacement::new(Length::new::<foot>(arr[6]), Angle::new::<radian>(arr[7]));
 
     // let mut modules = vec![&mut w1, &mut w2, &mut w3, &mut w4];
     let pos = odom.update(&DriveTrainDistanceOutput { tr, br, bl, tl });

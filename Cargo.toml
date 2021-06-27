@@ -1,5 +1,5 @@
 [package]
-name = "RustSwerveAlgo"
+name = "rusty_swerve_algo"
 version = "0.1.0"
 authors = ["kaustubh <kaustubh.khulbe@gmail.com>"]
 edition = "2018"

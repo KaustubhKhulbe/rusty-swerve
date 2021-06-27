@@ -15,7 +15,7 @@ impl Point<Length> {
     }
 
     pub fn bearing(&self) -> Angle {
-        return Angle::new::<radian>(self.y.value.atan2(self.x.value));
+        Angle::new::<radian>(self.y.value.atan2(self.x.value))
     }
 
     pub fn magnitude(&self) -> Length {
@@ -43,7 +43,7 @@ impl Point<Velocity> {
     }
 
     pub fn bearing(&self) -> Angle {
-        return Angle::new::<radian>(self.y.value.atan2(self.x.value));
+        Angle::new::<radian>(self.y.value.atan2(self.x.value))
     }
 
     pub fn magnitude(&self) -> Velocity {

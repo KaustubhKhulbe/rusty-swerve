@@ -25,12 +25,12 @@ impl Control {
         ];
 
         // need to confirm if name: index is in the right order
-        return SwerveDrivetrainOutput {
+        SwerveDrivetrainOutput {
             tr: self.get_module_output(2, target_velocity, target_angular_velocity),
-            br: self.get_module_output(3, target_velocity, target_angular_velocity),
+            br: self.get_module_output(1, target_velocity, target_angular_velocity),
             bl: self.get_module_output(0, target_velocity, target_angular_velocity),
-            tl: self.get_module_output(1, target_velocity, target_angular_velocity),
-        };
+            tl: self.get_module_output(3, target_velocity, target_angular_velocity),
+        }
     }
 
     fn get_module_output(

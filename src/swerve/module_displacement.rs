@@ -8,6 +8,6 @@ pub struct ModuleDisplacement {
 
 impl ModuleDisplacement {
     pub fn new(distance: Length, bearing: Angle) -> ModuleDisplacement {
-        return ModuleDisplacement { distance, bearing };
+        ModuleDisplacement { distance, bearing }
     }
 }
